@@ -1,10 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
-import json
-from scheduler import schedule_tasks
-    
+import scheduler as scheduler
+#from scheduler import schedule_tasks
+
 app = FastAPI()
+
+
+class TaskProps(BaseModel):
+    name: str
+    description: Optional[str] = None
+    start: Optional[str] = None
+    end: Optional[str] = None
+    intervalStart: Optional[str] = None
+    intervalEnd: Optional[str] = None
+    travelTime: Optional[int] = 0
 
 
 @app.get("/")
@@ -12,13 +22,7 @@ def root():
     return {"message": "FastAPI is working!"}
 
 
-
-@app.route('/schedule', methods=['POST'])
-def schedule():
-    tasks = request.json  # array of TaskProps
-    result = schedule_tasks(tasks)
-    return jsonify(result)
-
-
-if __name__ == '__main__':
-    app.run()
+@app.post("/schedule")
+def schedule(tasks: List[TaskProps]):
+    result = scheduler.schedule_tasks(tasks)
+    return result
