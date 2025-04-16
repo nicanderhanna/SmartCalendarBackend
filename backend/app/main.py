@@ -35,5 +35,6 @@ def root():
 
 @app.post("/schedule")
 def schedule(tasks: List[TaskProps]):
+    print(tasks)
     result = scheduler.schedule_tasks(tasks)
     return result
