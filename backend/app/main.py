@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
 import json
-from .scheduler import plan_schedule  # Importing the scheduling logic
 from flask import Flask, request, jsonify
 from scheduler import schedule_tasks
     
