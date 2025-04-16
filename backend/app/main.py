@@ -28,3 +28,8 @@ async def create_schedule(tasks: List[TaskProps]):
     # Call OR-Tools function to create the schedule
     planned_schedule = plan_schedule(tasks)
     return json.dumps(planned_schedule)
+
+
+@app.get("/")
+def root():
+    return {"message": "FastAPI is working!"}
