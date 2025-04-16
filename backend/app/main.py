@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
-import scheduler as scheduler
-#from scheduler import schedule_tasks
+#import scheduler as scheduler
+from .import scheduler
 
 app = FastAPI()
 
