@@ -4,8 +4,6 @@ from datetime import datetime, timedelta
 
 def minutes_since_midnight(time_num):
     return int(time_num)
-
-
 def schedule_tasks(tasks):
     model = cp_model.CpModel()
 
@@ -13,7 +11,7 @@ def schedule_tasks(tasks):
     variables = []
 
     for i, task in enumerate(tasks):
-        if task["taken"]:
+        if task.taken:
             continue  # skip already scheduled tasks
 
         task_id = task.get("id", str(i))
@@ -22,11 +20,11 @@ def schedule_tasks(tasks):
         duration = max(duration, 1)
 
         # Interval task
-        if task["isInterval"]:
-            start_min = minutes_since_midnight(task["startTime"])
-            end_max = minutes_since_midnight(task["endTime"])
+        if task.isInterval:
+            start_min = minutes_since_midnight(task.startTime)
+            end_max = minutes_since_midnight(task.endTime)
         else:  # Fixed time task
-            start_min = minutes_since_midnight(task["startTime"])
+            start_min = minutes_since_midnight(task.startTime)
             end_max = start_min + duration
 
         start = model.NewIntVar(start_min, end_max - duration, f"start_{i}")
@@ -57,10 +55,10 @@ def schedule_tasks(tasks):
     result = []
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         for task_info in scheduled_tasks:
-            start_time = solver.Value(task_info["start_var"])
-            end_time = solver.Value(task_info["end_var"])
+            start_time = solver.Value(task_info.start_var)
+            end_time = solver.Value(task_info.end_var)
             result.append({
-                **task_info["task"],
+                **task_info.task,
                 "scheduledStart": start_time,
                 "scheduledEnd": end_time
             })
