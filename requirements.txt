@@ -2,4 +2,3 @@ fastapi
 uvicorn
 ortools
 pydantic  # Used for validating data
-flask
