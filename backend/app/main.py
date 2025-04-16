@@ -24,8 +24,8 @@ class TaskProps(BaseModel):
 
   icon: Optional[str] = None # The icon that will be shown in the calendar
   travelMode: Optional[str] = None
-  googleTask: bool;
-  taken: bool;
+  googleTask: Optional[bool] = None;
+  taken: Optional[bool] = None;
 
 
 @app.get("/")
