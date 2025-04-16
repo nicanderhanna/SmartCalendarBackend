@@ -5,16 +5,27 @@ from typing import List, Optional
 from .import scheduler
 
 app = FastAPI()
-
-
+    
 class TaskProps(BaseModel):
-    name: str
-    description: Optional[str] = None
-    start: Optional[str] = None
-    end: Optional[str] = None
-    intervalStart: Optional[str] = None
-    intervalEnd: Optional[str] = None
-    travelTime: Optional[int] = 0
+  id: Optional[str] = None #this will be assigned by firebase
+
+  taskName: Optional[str] = None
+  contactName: Optional[str] = None
+  taskDescription: Optional[str] = None
+  itemsName: Optional[List[str]] = None
+  taskColor: Optional[str] = None
+  isInterval: bool; # true if the task is an interval, false if it is a single task
+
+  startTime: Optional[str] = None # det ska komma in som 990, inte 16:00
+  endTime: Optional[str] = None # det ska komma in som 990, inte 16:00
+  takesTime: Optional[str] = None #
+  travelTime: Optional[str] = None 
+  dateOfTask: Optional[str] = None # YYYY-MM-DD format
+
+  icon: Optional[str] = None # The icon that will be shown in the calendar
+  travelMode: Optional[str] = None
+  googleTask: bool;
+  taken: bool;
 
 
 @app.get("/")
