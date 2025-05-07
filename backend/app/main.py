@@ -5,6 +5,8 @@ from typing import List, Optional
 #import scheduler as scheduler
 from .import scheduler
 import json
+from fastapi.middleware.cors import CORSMiddleware
+
 
 
 app = FastAPI()
@@ -29,6 +31,15 @@ class TaskProps(BaseModel):
   travelMode: Optional[str] = None
   googleTask: Optional[bool] = None
   taken: Optional[bool] = None
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # eller t.ex. ["http://localhost:5173"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def root():
