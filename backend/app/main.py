@@ -41,7 +41,6 @@ def schedule(tasks: List[TaskProps]):
         print(tasks)
         result = scheduler.schedule_tasks(tasks)
         print("this is after!!!!!!!!!!!!!")
-        print(json.dumps(result))
         return result
     except Exception as e:
         print("❌ Fel i /schedule:", e)
