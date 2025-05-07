@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 #import scheduler as scheduler
 from .import scheduler
+import json
 
 app = FastAPI()
     
@@ -14,7 +15,7 @@ class TaskProps(BaseModel):
   taskDescription: Optional[str] = None
   itemsName: Optional[List[str]] = None
   taskColor: Optional[str] = None
-  isInterval: bool; # true if the task is an interval, false if it is a single task
+  isInterval: bool # true if the task is an interval, false if it is a single task
 
   startTime: Optional[str] = None 
   endTime: Optional[str] = None # 
@@ -33,10 +34,13 @@ def root():
 
 @app.post("/schedule")
 def schedule(tasks: List[TaskProps]):
-    print("this is before!!!!!!!!!!!!!")
-    print(tasks)
-    result = scheduler.schedule_tasks(tasks)
-    print("this is afteer!!!!!!!!!!!!!")
-    print(result)
-    
-    return result
+    try:
+        print("this is before!!!!!!!!!!!!!")
+        print(tasks)
+        result = scheduler.schedule_tasks(tasks)
+        print("this is after!!!!!!!!!!!!!")
+        print(json.dumps(result))
+        return result
+    except Exception as e:
+        print("❌ Fel i /schedule:", e)
+        return JSONResponse(content={"error": str(e)}, status_code=500)
