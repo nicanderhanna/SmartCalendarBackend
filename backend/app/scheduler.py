@@ -16,6 +16,7 @@ def time_from_minutes(minutes):
 
 
 def schedule_tasks(tasks):
+    
     model = cp_model.CpModel()
     
     scheduled_tasks = []
@@ -24,14 +25,17 @@ def schedule_tasks(tasks):
     for task in tasks:
         startTime = minutes_since_midnight(task.startTime)
         endTime = minutes_since_midnight(task.endTime)
-        duration = minutes_since_midnight(task.duration)
+        if(task.isInterval): duration = minutes_since_midnight(task.duration)
+        else: duration = endTime - startTime
+
         
         if not task.isInterval:  # Set start and end times
             start = model.new_int_var(startTime, startTime, "start")
             end = model.new_int_var(endTime, endTime, "end") 
         else:  # Occures within a intervall
+            print("task är en intervall")
             start = model.new_int_var(startTime, endTime - duration, "start")
-            end = model.new_int_var(startTime + duration, endTime, "start")
+            end = model.new_int_var(startTime + duration, endTime, "end")
             
         model.add(end == start + duration)
         
@@ -64,13 +68,19 @@ def schedule_tasks(tasks):
     solver = cp_model.CpSolver()
     status = solver.solve(model)
     
+
+    print("Solver status:", status)
+    print(cp_model.OPTIMAL)
+    print(cp_model.FEASIBLE)
+    print(cp_model.INFEASIBLE)
+    
     result = []
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         for task_info in scheduled_tasks:
-            start_time = solver.Value(task_info.start_var)
-            end_time = solver.Value(task_info.end_var)
+            start_time = solver.Value(task_info["start_var"])
+            end_time = solver.Value(task_info["end_var"])
             result.append({
-                **task_info.task,
+                "task": task_info["task"],  # Keep the object as-is
                 "scheduledStart": time_from_minutes(start_time),
                 "scheduledEnd": time_from_minutes(end_time)
             })
@@ -78,3 +88,12 @@ def schedule_tasks(tasks):
         result.append({"error": "No feasible schedule found"})
 
     return result
+
+"""print("Solver status:", status)
+if status == cp_model.OPTIMAL:
+    print("Optimal solution found!")
+elif status == cp_model.FEASIBLE:
+    print("Feasible solution found!")
+else:
+    print("No solution found (status code:", status, ")")
+"""
