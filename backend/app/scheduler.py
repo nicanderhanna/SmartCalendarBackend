@@ -1,6 +1,7 @@
 from ortools.sat.python import cp_model
 from datetime import datetime, timedelta
 
+
 """_summary_ makes time_str to correlating minuits since midnight.
 """
 def minutes_since_midnight(time_str):
