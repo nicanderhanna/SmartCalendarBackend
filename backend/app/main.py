@@ -32,6 +32,9 @@ class TaskProps(BaseModel):
   googleTask: Optional[bool] = None
   taken: Optional[bool] = None
 
+  scheduledStartTime: Optional[str] = None # The time the schedule API has decided is best
+  scheduledEndTime: Optional[str] = None
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # eller t.ex. ["http://localhost:5173"]
