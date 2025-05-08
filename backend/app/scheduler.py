@@ -85,12 +85,20 @@ def schedule_tasks(tasks):
                 "scheduledStart": time_from_minutes(start_time),
                 "scheduledEnd": time_from_minutes(end_time)
             }) """
-            
-            task = task_info["task"]
+
+            """task = task_info["task"]
             task.scheduledStartTime = time_from_minutes(start_time)
             task.scheduledEndTime = time_from_minutes(end_time)
 
-            result.append(task.dict())
+            result.append(task.dict())"""
+
+            task = task_info["task"]
+            updated_task = task.model_copy(update={
+                "scheduledStartTime": time_from_minutes(start_time),
+                "scheduledEndTime": time_from_minutes(end_time)
+            })
+
+            result.append(updated_task.dict())
     else:
         result.append({"error": "No feasible schedule found"})
 
