@@ -103,7 +103,7 @@ def schedule_tasks(tasks):
                 "scheduledEndTime": time_from_minutes(end_time)
             })"""
 
-            print("Efter update:", updated_task)
+            print("Efter update:", task)
             result.append(task.dict())
     else:
         result.append({"error": "No feasible schedule found"})
