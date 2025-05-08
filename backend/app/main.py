@@ -37,7 +37,7 @@ class TaskProps(BaseModel):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # eller t.ex. ["http://localhost:5173"]
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -51,10 +51,7 @@ def root():
 @app.post("/schedule")
 def schedule(tasks: List[TaskProps]):
     try:
-        print("this is before!!!!!!!!!!!!!")
-        print(tasks)
         result = scheduler.schedule_tasks(tasks)
-        print("this is after!!!!!!!!!!!!!")
         return result
     except Exception as e:
         print("❌ Fel i /schedule:", e)

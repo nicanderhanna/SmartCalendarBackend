@@ -1,7 +1,6 @@
 from ortools.sat.python import cp_model
 from datetime import datetime, timedelta
 
-
 """_summary_ makes time_str to correlating minuits since midnight.
 """
 def minutes_since_midnight(time_str):
@@ -15,11 +14,8 @@ def time_from_minutes(minutes):
     mins = minutes % 60
     return f"{hours:02d}:{mins:02d}"
 
-
 def schedule_tasks(tasks):
-    
     model = cp_model.CpModel()
-    
     scheduled_tasks = []
     variables = []
     
@@ -29,17 +25,14 @@ def schedule_tasks(tasks):
         if(task.isInterval): duration = minutes_since_midnight(task.duration)
         else: duration = endTime - startTime
 
-        
         if not task.isInterval:  # Set start and end times
             start = model.new_int_var(startTime, startTime, "start")
             end = model.new_int_var(endTime, endTime, "end") 
         else:  # Occures within a intervall
-            print("task är en intervall")
             start = model.new_int_var(startTime, endTime - duration, "start")
             end = model.new_int_var(startTime + duration, endTime, "end")
             
         model.add(end == start + duration)
-        
         variables.append((start, end, duration))
     
         scheduled_tasks.append({
@@ -65,15 +58,8 @@ def schedule_tasks(tasks):
             )
             model.AddNoOverlap([interval_i, interval_j])
 
-    
     solver = cp_model.CpSolver()
     status = solver.solve(model)
-    
-
-    print("Solver status:", status)
-    print(cp_model.OPTIMAL)
-    print(cp_model.FEASIBLE)
-    print(cp_model.INFEASIBLE)
     
     result = []
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
@@ -81,40 +67,12 @@ def schedule_tasks(tasks):
             start_time = solver.Value(task_info["start_var"])
             end_time = solver.Value(task_info["end_var"])
 
-            """ result.append({
-                "task": task_info["task"],  # Keep the object as-is
-                "scheduledStart": time_from_minutes(start_time),
-                "scheduledEnd": time_from_minutes(end_time)
-            }) """
-
-            """task = task_info["task"]
-            task.scheduledStartTime = time_from_minutes(start_time)
-            task.scheduledEndTime = time_from_minutes(end_time)
-
-            result.append(task.dict)"""
-
             task = task_info["task"]
-            print("Före update:", task)
             task.scheduledStartTime = time_from_minutes(start_time)
             task.scheduledEndTime = time_from_minutes(end_time)
 
-            """updated_task = task.model_copy(update={
-                "scheduledStartTime": time_from_minutes(start_time),
-                "scheduledEndTime": time_from_minutes(end_time)
-            })"""
-
-            print("Efter update:", task)
             result.append(task.dict())
     else:
         result.append({"error": "No feasible schedule found"})
 
     return result
-
-"""print("Solver status:", status)
-if status == cp_model.OPTIMAL:
-    print("Optimal solution found!")
-elif status == cp_model.FEASIBLE:
-    print("Feasible solution found!")
-else:
-    print("No solution found (status code:", status, ")")
-"""
