@@ -22,7 +22,12 @@ def schedule_tasks(tasks):
     for task in tasks:
         startTime = minutes_since_midnight(task.startTime)
         endTime = minutes_since_midnight(task.endTime)
-        if(task.takesTime != "" or task.takesTime!=None): takesTime = minutes_since_midnight(task.takesTime)
+
+        print("this is task.takesTime: ", task.takesTime)
+
+        if(task.takesTime != "" and task.takesTime!= None): 
+            takesTime = minutes_since_midnight(task.takesTime)
+
         else: takesTime = endTime - startTime
 
         if task.takesTime == "" or task.takesTime==None:  # Set start and end times
