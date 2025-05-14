@@ -22,10 +22,10 @@ def schedule_tasks(tasks):
     for task in tasks:
         startTime = minutes_since_midnight(task.startTime)
         endTime = minutes_since_midnight(task.endTime)
-        if(task.takesTime != ""): takesTime = minutes_since_midnight(task.takesTime)
+        if(task.takesTime != "" or task.takesTime!=None): takesTime = minutes_since_midnight(task.takesTime)
         else: takesTime = endTime - startTime
 
-        if task.takesTime == "":  # Set start and end times
+        if task.takesTime == "" or task.takesTime==None:  # Set start and end times
             start = model.new_int_var(startTime, startTime, "start")
             end = model.new_int_var(endTime, endTime, "end") 
         else:  # Occures within a intervall
