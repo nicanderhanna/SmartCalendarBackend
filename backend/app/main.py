@@ -6,6 +6,7 @@ from typing import List, Optional
 from .import scheduler
 import json
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Optional, List, Any
 
 
 
@@ -24,11 +25,11 @@ class TaskProps(BaseModel):
   startTime: Optional[str] = None 
   endTime: Optional[str] = None # 
   takesTime: Optional[str] = None 
-  travelTime: Optional[str] = None 
+  travelTime: Optional[int] = None 
   dateOfTask: Optional[str] = None # YYYY-MM-DD format
 
-  #origin: Optional[any] = None
-  #destination: Optional[any] = None
+  origin: Optional[Any] = None
+  destination: Optional[Any] = None
   icon: Optional[str] = None # The icon that will be shown in the calendar
   travelMode: Optional[str] = None
   googleTask: Optional[bool] = None
@@ -58,5 +59,5 @@ def schedule(tasks: List[TaskProps]):
         print("this is the scheduled task from backend ", result)
         return result
     except Exception as e:
-        print("❌ Fel i /schedule:", e)
+        print(" Fel i /schedule:", e)
         return JSONResponse(content={"error": str(e)}, status_code=500)
