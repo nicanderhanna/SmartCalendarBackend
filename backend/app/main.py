@@ -27,6 +27,8 @@ class TaskProps(BaseModel):
   travelTime: Optional[str] = None 
   dateOfTask: Optional[str] = None # YYYY-MM-DD format
 
+  orgin: Optional[str] = None
+  destination: Optional[str] = None
   icon: Optional[str] = None # The icon that will be shown in the calendar
   travelMode: Optional[str] = None
   googleTask: Optional[bool] = None
