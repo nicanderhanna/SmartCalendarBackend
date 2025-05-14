@@ -1,8 +1,8 @@
 from ortools.sat.python import cp_model
 from datetime import datetime, timedelta
 
-"""_summary_ makes time_str to correlating minuits since midnight.
-"""
+"""_summary_ makes time_str to correlating minuits since midnight."""
+
 def minutes_since_midnight(time_str):
     if ":" in time_str:
         hours, minutes = map(int, time_str.split(":"))

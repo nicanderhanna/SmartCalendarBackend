@@ -19,7 +19,7 @@ class TaskProps(BaseModel):
   taskDescription: Optional[str] = None
   itemsName: Optional[List[str]] = None
   taskColor: Optional[str] = None
-  isInterval: bool # true if the task is an interval, false if it is a single task
+  #isInterval: bool # true if the task is an interval, false if it is a single task
 
   startTime: Optional[str] = None 
   endTime: Optional[str] = None # 
