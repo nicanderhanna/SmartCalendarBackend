@@ -20,15 +20,18 @@ def schedule_tasks(tasks):
     variables = []
     
     for task in tasks:
-        startTime = minutes_since_midnight(task.startTime)
-        endTime = minutes_since_midnight(task.endTime)
-
-        print("this is task.takesTime: ", task.takesTime)
-
-        if(task.takesTime != "" and task.takesTime!= None): 
-            takesTime = minutes_since_midnight(task.takesTime)
-
-        else: takesTime = endTime - startTime
+        if (task.travelTime != -1):
+            startTime = minutes_since_midnight(task.startTime) - task.travelTime
+            endTime = minutes_since_midnight(task.endTime)
+            if(task.takesTime != "" and task.takesTime!= None): 
+                takesTime = minutes_since_midnight(task.takesTime) + task.travelTime
+            else: takesTime = endTime - startTime
+        else:
+            startTime = minutes_since_midnight(task.startTime)
+            endTime = minutes_since_midnight(task.endTime)
+            if(task.takesTime != "" and task.takesTime!= None): 
+                takesTime = minutes_since_midnight(task.takesTime)
+            else: takesTime = endTime - startTime
 
         if task.takesTime == "" or task.takesTime == None:  # Set start and end times
             start = model.new_int_var(startTime, startTime, "start")
