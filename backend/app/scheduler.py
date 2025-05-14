@@ -22,18 +22,18 @@ def schedule_tasks(tasks):
     for task in tasks:
         startTime = minutes_since_midnight(task.startTime)
         endTime = minutes_since_midnight(task.endTime)
-        if(task.takesTime != ""): duration = minutes_since_midnight(task.duration)
-        else: duration = endTime - startTime
+        if(task.takesTime != ""): takesTime = minutes_since_midnight(task.takesTime)
+        else: takesTime = endTime - startTime
 
         if task.takesTime == "":  # Set start and end times
             start = model.new_int_var(startTime, startTime, "start")
             end = model.new_int_var(endTime, endTime, "end") 
         else:  # Occures within a intervall
-            start = model.new_int_var(startTime, endTime - duration, "start")
-            end = model.new_int_var(startTime + duration, endTime, "end")
+            start = model.new_int_var(startTime, endTime - takesTime, "start")
+            end = model.new_int_var(startTime + takesTime, endTime, "end")
             
-        model.add(end == start + duration)
-        variables.append((start, end, duration))
+        model.add(end == start + takesTime)
+        variables.append((start, end, takesTime))
     
         scheduled_tasks.append({
             "task": task,
@@ -46,7 +46,7 @@ def schedule_tasks(tasks):
         for j in range(i + 1, len(variables)):
             interval_i = model.NewIntervalVar(
                 variables[i][0],  # start
-                variables[i][2],  # size (duration)
+                variables[i][2],  # size (takesTime)
                 variables[i][1],  # end
                 f"interval_{i}"
             )
