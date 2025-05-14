@@ -23,7 +23,7 @@ class TaskProps(BaseModel):
 
   startTime: Optional[str] = None 
   endTime: Optional[str] = None # 
-  duration: Optional[str] = None 
+  takesTime: Optional[str] = None 
   travelTime: Optional[str] = None 
   dateOfTask: Optional[str] = None # YYYY-MM-DD format
 
