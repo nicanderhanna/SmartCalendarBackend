@@ -62,6 +62,7 @@ def schedule_tasks(tasks):
     status = solver.solve(model)
     
     result = []
+    print(cp_mode.status)
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         for task_info in scheduled_tasks:
             start_time = solver.Value(task_info["start_var"])
