@@ -30,7 +30,7 @@ def schedule_tasks(tasks):
 
         else: takesTime = endTime - startTime
 
-        if task.takesTime == "" or task.takesTime==None:  # Set start and end times
+        if task.takesTime == "" or task.takesTime == None:  # Set start and end times
             start = model.new_int_var(startTime, startTime, "start")
             end = model.new_int_var(endTime, endTime, "end") 
         else:  # Occures within a intervall
