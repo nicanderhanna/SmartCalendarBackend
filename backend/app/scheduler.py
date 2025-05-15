@@ -70,8 +70,12 @@ def schedule_tasks(tasks):
     status = solver.solve(model)
     
     result = []
-    if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
+    print(status)
+    if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+    #if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
+        print("is optimal or feasible")
         for task_info in scheduled_tasks:
+            
             start_time = solver.Value(task_info["start_var"])
             end_time = solver.Value(task_info["end_var"])
 
