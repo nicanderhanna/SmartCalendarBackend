@@ -1,8 +1,9 @@
+# Smart Calander Backend v 0.1
+
 This is the backend service for the Smart Calendar application. 
 It is responsible for scheduling tasks and calculating the best 
 available time slots based on the constraints of each task. 
-The backend is built with Python using FastAPI (or Flask if applicable) 
-and is deployed on Render.com. 
+The backend is built with Python using FastAPI and is deployed on Render.com. 
 
 It exposes a single main endpoint: 
 POST /schedule. 
@@ -21,3 +22,15 @@ and start the server with uvicorn main:app --reload.
 The backend will be available at http://localhost:8000. 
 The production version is hosted at https://smartcalendarbackend.onrender.com/, 
 where the /schedule endpoint can be tested using tools like Postman or cURL.
+
+## Contact / Support
+**Main Contact: Hanna Nicander, hanna.nicander@hotmail.com**
+Reach us:
+- Project owner: Joel Friis, p.lars.joelfriis@gmail.com
+- Scrum master: Hanna Nicander, hanna.nicander@hotmail.com
+- Developer: Alexander Alvarez, alealv04@hotmail.com
+- Developer: Andia Mir, andiamir52@gmail.com
+- Developer: Daniella Rönnlund, dronn@kth.se
+- Developer: Dante Consentino, djco@kth.se
+- Developer: Linnea Udén, linnea.uden1@gmail.com
+- Developer: Nikodemus Ohm, nikno@kth.se
