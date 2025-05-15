@@ -81,6 +81,6 @@ def schedule_tasks(tasks):
 
             result.append(task.dict())
     else:
-        raise Exception("No feasible schedule found")
+        result.append({"error": "No feasible schedule found"})
 
     return result
