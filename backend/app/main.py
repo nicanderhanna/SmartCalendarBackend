@@ -53,10 +53,7 @@ def root():
 @app.post("/schedule")
 def schedule(tasks: List[TaskProps]):
     try:
-        print("this is before sheduling: ", tasks)
         result = scheduler.schedule_tasks(tasks)
-        print("this is the scheduled task from backend ", result)
         return result
     except Exception as e:
-        print(" Fel i /schedule:", e)
         return JSONResponse(content={"error": str(e)}, status_code=500)

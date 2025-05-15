@@ -70,21 +70,17 @@ def schedule_tasks(tasks):
     status = solver.solve(model)
     
     result = []
-    print(status)
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         for task_info in scheduled_tasks:
             start_time = solver.Value(task_info["start_var"])
             end_time = solver.Value(task_info["end_var"])
 
             task = task_info["task"]
-            print("we are in the thing")
-            print(time_from_minutes(start_time))
-            print(time_from_minutes(end_time))
             task.scheduledStartTime = time_from_minutes(start_time)
             task.scheduledEndTime = time_from_minutes(end_time)
 
             result.append(task.dict())
     else:
-        result.append({"error": "No feasible schedule found"})
+        raise Exception("No feasible schedule found")
 
     return result
